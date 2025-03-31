@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var timerModel = TimerModel()
+    @StateObject var timerController = TimerController()
     
     var body: some View {
         VStack {
@@ -21,12 +21,12 @@ struct ContentView: View {
                     .foregroundColor(.gray)
                     
                 Circle()
-                    .trim(from: 0, to: timerModel.progress)
+                    .trim(from: 0, to: timerController.timerModel.progress)
                     .stroke(.blue, lineWidth: 20)
                     .rotationEffect(.degrees(-90))
-                    .animation(.easeInOut(duration: 1), value: timerModel.progress)
+                    .animation(.easeInOut(duration: 1), value: timerController.timerModel.progress)
                 
-                Text("\(timerModel.remainedTime) 초")
+                Text("\(timerController.timerModel.remainedTime) 초")
                     .font(.largeTitle)
                     .bold()
             }
@@ -34,27 +34,27 @@ struct ContentView: View {
             .padding()
             
             HStack {
-                if !timerModel.isRunning {
+                if !timerController.timerModel.isRunning {
                     Button {
-                        if timerModel.isPaused {
-                            timerModel.timerResume()
+                        if timerController.timerModel.isPaused {
+                            timerController.timerResume()
                         }else {
-                            timerModel.timerStart()
+                            timerController.timerStart()
                         }
                     } label: {
-                        Text(timerModel.isRunning ? "RESUME" : "START")
+                        Text(timerController.timerModel.isRunning ? "RESUME" : "START")
                     }
                     .buttonStyle(.bordered)
                 }
-                if timerModel.isRunning {
+                if timerController.timerModel.isRunning {
                     Button("PAUSE") {
-                        timerModel.timerPaused()
+                        timerController.timerPaused()
                     }
                     .buttonStyle(.bordered)
                 }
                 
                 Button("RESET") {
-                    timerModel.timerReset()
+                    timerController.timerReset()
                 }
                 .buttonStyle(.bordered)
             }
