@@ -53,7 +53,7 @@ struct ContentView: View {
                     .buttonStyle(.bordered)
                 }
                 
-                Button("리셋") {
+                Button("RESET") {
                     timerModel.timerReset()
                 }
                 .buttonStyle(.bordered)

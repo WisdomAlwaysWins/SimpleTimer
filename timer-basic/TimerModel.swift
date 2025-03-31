@@ -14,8 +14,6 @@ class TimerModel : ObservableObject {
     @Published var isRunning : Bool = false // 실행 여부
     @Published var isPaused : Bool = false // 일시정지 여부
     
-    var timer : Timer?
-    
     var progress : CGFloat { // 진행 상황
         CGFloat(remainedTime) / CGFloat(totalTime)
     }
@@ -29,44 +27,5 @@ class TimerModel : ObservableObject {
      반드시 Timer가 초기화되어야하는데, 타이머가 시작하지 않은 상태에서도 변수를 가져야하므로 nil이 가능해야함.
      
      */
-    
-    func timerStart() {
-        if isRunning { return }
-        
-        isRunning = true
-        isPaused = false
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
-            if self.remainedTime > 0 {
-                self.remainedTime -= 1
-            } else {
-                self.timerStop()
-            }
-        })
-    }
-    
-    func timerStop() {
-        isRunning = false
-        timer?.invalidate()
-        timer = nil
-    }
-    
-    func timerPaused() {
-        if isRunning {
-            isPaused = true
-            isRunning = false
-            timer?.invalidate() // 타이머를 멈춤. 완전히 제거 X
-        }
-    }
-    
-    func timerResume() {
-        if isPaused {
-            timerStart() 
-        }
-    }
-    
-    func timerReset() {
-        timerStop()
-        remainedTime = totalTime
-    }
+ 
 }
